@@ -10,7 +10,7 @@ public class Solution
 {
     public static void main(String[] args) throws Exception
     {
-       SimpleObject<String> stringObject = new StringObject<Object>();
+       SimpleObject<String> stringObject = new StringObject();
     }
 
     interface SimpleObject<T>
@@ -18,12 +18,11 @@ public class Solution
         SimpleObject<T> getInstance();
     }
 
-    public static class StringObject<String> implements SimpleObject{
-
+    public static class StringObject implements SimpleObject<String>{
         @Override
         public SimpleObject<String> getInstance()
         {
-            return new StringObject<String>();
+            return new StringObject();
         }
     }
 
