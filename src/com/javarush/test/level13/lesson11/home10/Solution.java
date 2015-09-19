@@ -34,7 +34,6 @@ public class Solution
 
         @Override
         public Color getColor() {
-            // TODO Auto-generated method stub
             return null;
         }
 
