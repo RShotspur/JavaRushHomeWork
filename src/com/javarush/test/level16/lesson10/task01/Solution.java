@@ -29,8 +29,14 @@ public class Solution {
         private int seconds;
 
         public void run() {
+            Thread current = new Thread().currentThread();
             try {
                 //add your code here - добавьте код тут
+                while (!current.isInterrupted())
+                {
+                    Thread.sleep(1000);
+                    seconds++;
+                }
             } catch (InterruptedException e) {
                 System.out.println(seconds);
             }
