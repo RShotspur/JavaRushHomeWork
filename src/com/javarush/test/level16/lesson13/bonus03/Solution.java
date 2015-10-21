@@ -16,10 +16,12 @@ public class Solution {
     public static Thread.UncaughtExceptionHandler handler = new OurUncaughtExceptionHandler();
 
     public static void main(String[] args) {
-        TestedThread commonThread = new TestedThread(handler);
+//        TestedThread commonThread = new TestedThread(handler);
+        TestedThread threadA = new TestedThread(handler, "Нить 1");
+        TestedThread threadB = new TestedThread(handler, "Нить 2");
 
-        Thread threadA = new Thread(commonThread, "Нить 1");
-        Thread threadB = new Thread(commonThread, "Нить 2");
+//        Thread threadA = new Thread(commonThread, "Нить 1");
+//        Thread threadB = new Thread(commonThread, "Нить 2");
 
         threadA.start();
         threadB.start();
@@ -29,9 +31,12 @@ public class Solution {
     }
 
     public static class TestedThread extends Thread {
-        public TestedThread(UncaughtExceptionHandler handler) {
+        public TestedThread(UncaughtExceptionHandler handler, String name) {
+            //as one of variants
+//            setDefaultUncaughtExceptionHandler(handler);
+            super(name);
             setUncaughtExceptionHandler(handler);
-            start();
+//            start();
         }
 
         public void run() {
