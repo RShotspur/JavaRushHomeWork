@@ -65,10 +65,4 @@ public class User {
         }
     }
 
-//    @Override
-//    public String toString()
-//    {
-//        String result = getFirstName()+" "+getLastName()+" "+getBirthDate()+" "+isMale()+" "+getCountry().getDisplayedName();
-//        return result;
-//    }
 }

@@ -20,7 +20,7 @@ public class Solution {
             InputStream inputStream = new FileInputStream(your_file_name);
 
 
-            // LOAD for two javaRush does not work (((
+            // LOAD for two javaRush does not work, but there is a solution :)
 
 
             JavaRush javaRush = new JavaRush();
@@ -55,21 +55,25 @@ public class Solution {
             javaRush2.save(outputStream);
 //            outputStream.flush();
 
+//            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
             JavaRush loadedObject = new JavaRush();
             loadedObject.load(inputStream);
+//            loadedObject.load(reader);
             JavaRush loadedObject2 = new JavaRush();
             loadedObject2.load(inputStream);
+//            loadedObject2.load(reader);
             for (User user : loadedObject.users)
-                    user.toString();
+                System.out.println(user);
             for (User user : loadedObject2.users)
-                    user.toString();
+                System.out.println(user);
             //check here that javaRush object equals to loadedObject object - проверьте тут, что javaRush и loadedObject равны
 
             outputStream.close();
             inputStream.close();
 
         } catch (IOException e) {
-            //e.printStackTrace();
+            e.printStackTrace();
             System.out.println("Oops, something wrong with my file");
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,7 +124,10 @@ public class Solution {
         }
 
         public void load(InputStream inputStream) throws Exception {
-            //implement this method - реализуйте этот метод
+
+            // that's how it could work with some number of javaRush objects
+//        public void load(BufferedReader reader) throws Exception {
+//            //implement this method - реализуйте этот метод
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
             if (reader.readLine().equals("Y")){
                 int size = Integer.parseInt(reader.readLine());
