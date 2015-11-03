@@ -12,12 +12,12 @@ public class Solution implements Serializable {
     public static class Person implements Serializable {
         String firstName;
         String lastName;
-        String fullName;
-        final String greetingString;
+        transient String fullName;
+        transient final String greetingString;
         String country;
         Sex sex;
-        PrintStream outputStream;
-        Logger logger;
+        transient PrintStream outputStream;
+        transient Logger logger;
 
         Person(String firstName, String lastName, String country, Sex sex) {
             this.firstName = firstName;

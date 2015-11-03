@@ -1,9 +1,12 @@
-package com.javarush.test.level20.lesson10.home05;
+package com.javarush.test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 /**
- * Created by RS on 01.11.2015.
+ * Created by RS on 02.11.2015.
  */
 public class MyWay
 {
@@ -44,8 +47,8 @@ public class MyWay
         b5.addNeighbor(b1, 4);
         b5.addNeighbor(b4, 4);
 
-        a1.findWay(b4, new LinkedHashMap<City, Double>(), new ArrayList<City>());
-        System.out.println(a1.bestWay());
+
+        System.out.println(b2.bestWayTo(a2));
 
 
     }
@@ -68,7 +71,8 @@ public class MyWay
 
         public ArrayList<LinkedHashMap<City, Double>> listFoundedWays = new ArrayList<>();
 
-        public String bestWay(){
+        public String bestWayTo(City city){
+            this.findWay(city, new LinkedHashMap<City, Double>(), new ArrayList<City>());
             LinkedHashMap<City, Double> best = listFoundedWays.get(0);
             double min = 0;
             for (Double d : listFoundedWays.get(0).values())
@@ -76,7 +80,7 @@ public class MyWay
 
             for (LinkedHashMap<City, Double> tempWay : listFoundedWays){
                 double temp = 0;
-                for (Double d : listFoundedWays.get(0).values())
+                for (Double d : tempWay.values())
                     temp += d;
                 if (temp < min) {
                     best = tempWay;
@@ -110,6 +114,7 @@ public class MyWay
                 if (!visited.contains(pair.getKey())){
                     way.put(pair.getKey(), pair.getValue());
                     if (destination.equals(pair.getKey())){
+                        System.out.println("founded");
                         visited.get(0).listFoundedWays.add((LinkedHashMap<City, Double>)way.clone());
                         way.remove(pair.getKey());
                         continue;
