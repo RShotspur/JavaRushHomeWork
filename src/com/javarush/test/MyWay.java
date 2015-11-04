@@ -12,43 +12,63 @@ public class MyWay
 {
     public static void main(String[] args)
     {
-        City a1 = new City("A1");
-        City a2 = new City("A2");
-        City a3 = new City("A3");
-        City a4 = new City("A4");
-        City a5 = new City("A5");
-        City b1 = new City("B1");
-        City b2 = new City("B2");
-        City b3 = new City("B3");
-        City b4 = new City("B4");
-        City b5 = new City("B5");
+//        City a1 = new City("A1");
+//        City a2 = new City("A2");
+//        City a3 = new City("A3");
+//        City a4 = new City("A4");
+//        City a5 = new City("A5");
+//        City b1 = new City("B1");
+//        City b2 = new City("B2");
+//        City b3 = new City("B3");
+//        City b4 = new City("B4");
+//        City b5 = new City("B5");
 
-        a1.addNeighbor(a2, 4);
-        a1.addNeighbor(a5, 4);
-        a2.addNeighbor(a3, 4);
-        a2.addNeighbor(a1, 4);
-        a3.addNeighbor(a2, 4);
-        a3.addNeighbor(a4, 2);
-        a4.addNeighbor(a3, 2);
-        a4.addNeighbor(a5, 2);
-        a4.addNeighbor(b2, 20);
-        a5.addNeighbor(a1, 4);
-        a5.addNeighbor(a4, 2);
-
-        b1.addNeighbor(b2, 2);
-        b1.addNeighbor(b5, 4);
-        b2.addNeighbor(b1, 2);
-        b2.addNeighbor(a4, 20);
-        b2.addNeighbor(b3, 2);
-        b3.addNeighbor(b2, 2);
-        b3.addNeighbor(b4, 4);
-        b4.addNeighbor(b3, 4);
-        b4.addNeighbor(b5, 4);
-        b5.addNeighbor(b1, 4);
-        b5.addNeighbor(b4, 4);
+        City a = new City("A");
+        City b = new City("B");
+        City c = new City("C");
+        City d = new City("D");
+        City e = new City("E");
+        City f = new City("F");
 
 
-        System.out.println(b2.bestWayTo(a2));
+        a.addNeighbor(b, 80);
+        a.addNeighbor(c, 110);
+        a.addNeighbor(e, 330);
+        b.addNeighbor(f, 340);
+        c.addNeighbor(d, 60);
+        c.addNeighbor(e, 205);
+        d.addNeighbor(f, 192);
+        e.addNeighbor(f, 80);
+
+
+
+//        a1.addNeighbor(a2, 4);
+//        a1.addNeighbor(a5, 4);
+//        a2.addNeighbor(a3, 4);
+//        a2.addNeighbor(a1, 4);
+//        a3.addNeighbor(a2, 4);
+//        a3.addNeighbor(a4, 2);
+//        a4.addNeighbor(a3, 2);
+//        a4.addNeighbor(a5, 2);
+//        a4.addNeighbor(b2, 20);
+//        a5.addNeighbor(a1, 4);
+//        a5.addNeighbor(a4, 2);
+//
+//        b1.addNeighbor(b2, 2);
+//        b1.addNeighbor(b5, 4);
+//        b2.addNeighbor(b1, 2);
+//        b2.addNeighbor(a4, 20);
+//        b2.addNeighbor(b3, 2);
+//        b3.addNeighbor(b2, 2);
+//        b3.addNeighbor(b4, 4);
+//        b4.addNeighbor(b3, 4);
+//        b4.addNeighbor(b5, 4);
+//        b5.addNeighbor(b1, 4);
+//        b5.addNeighbor(b4, 4);
+
+
+        System.out.println(a.bestWayTo(f));
+        System.out.println();
 
 
     }
