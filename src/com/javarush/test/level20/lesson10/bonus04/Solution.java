@@ -66,7 +66,7 @@ public class Solution<E>
         list.remove("5");
         System.out.println("Expected null, actual is " + ((Solution) list).getParent("11"));
 
-        LinkedList<String> temp = new LinkedList<>();
+        LinkedList<String> temp = new LinkedList<String>();
 
 
     }

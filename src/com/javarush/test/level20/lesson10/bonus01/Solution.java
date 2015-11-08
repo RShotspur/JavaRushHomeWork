@@ -31,7 +31,7 @@ public class Solution {
 
     public static int[] getNumbers(int N) {
         int[] result = null;
-        List<Integer> listNumbers = new ArrayList<>();
+        List<Integer> listNumbers = new ArrayList<Integer>();
         int length;
         String n;
         long sum = 0;

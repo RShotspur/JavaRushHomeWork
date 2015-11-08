@@ -27,10 +27,10 @@ text1, text2 могут быть пустыми
 import java.io.*;
 import java.util.ArrayList;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+//import org.jsoup.Jsoup;
+//import org.jsoup.nodes.Document;
+//import org.jsoup.nodes.Element;
+//import org.jsoup.select.Elements;
 
 public class Solution {
     public static void main(String args[]) throws IOException
@@ -39,13 +39,13 @@ public class Solution {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         BufferedReader file = new BufferedReader(new FileReader(reader.readLine()));
         StringBuilder stringBuilder = new StringBuilder();
-        ArrayList<String> sList = new ArrayList<>();
+        ArrayList<String> sList = new ArrayList<String>();
         while (file.ready()) {
             stringBuilder = stringBuilder.append(file.readLine());
         }
         String t = args[0];
         String s = stringBuilder.toString().replaceAll("\r\n", "");
-        ArrayList<Pair> list = new ArrayList<>();
+        ArrayList<Pair> list = new ArrayList<Pair>();
         String open = "<".concat(t);
         String closing = "</".concat(t);
         int len = t.length();

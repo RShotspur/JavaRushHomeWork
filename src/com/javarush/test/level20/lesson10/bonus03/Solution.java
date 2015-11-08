@@ -31,7 +31,7 @@ same - (1, 1) - (4, 1)
     }
 
     public static List<Word> detectAllWords(int[][] crossword, String... words) {
-        List<Word> wordList = new ArrayList<>();
+        List<Word> wordList = new ArrayList<Word>();
         char[] chars;
 
         boolean isOK;
