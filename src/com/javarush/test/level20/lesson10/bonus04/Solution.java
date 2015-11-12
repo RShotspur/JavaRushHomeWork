@@ -1,9 +1,7 @@
 package com.javarush.test.level20.lesson10.bonus04;
 
 import java.io.Serializable;
-import java.util.AbstractList;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 
 /* Свой список
 Посмотреть, как реализован LinkedList.
@@ -57,25 +55,277 @@ public class Solution<E>
     extends AbstractList<E>
     implements List<E>, Cloneable, Serializable
 {
-    public static void main(String[] args) {
-        List<String> list = new Solution();
-        for (int i = 1; i < 16; i++) {
-            list.add(String.valueOf(i));
+    public static void main(java.lang.String[] args) {
+        List<java.lang.String> list = new Solution();
+        for (int i = 1; i < 25; i++) {
+            list.add(java.lang.String.valueOf(i));
         }
-        System.out.println("Expected 3, actual is " + ((Solution) list).getParent("8"));
-        list.remove("5");
-        System.out.println("Expected null, actual is " + ((Solution) list).getParent("11"));
+//        System.out.println("Expected 3, actual is " + ((Solution) list).getParent("8"));
+//        list.remove("2");
+//        list.remove("9");
+        for (String x : list){
+            System.out.println("x = " + x);
+            System.out.println("Parent of x: " + ((Solution) list).getParent(x));
+        }
 
-        LinkedList<String> temp = new LinkedList<String>();
+
 
 
     }
 
     transient int size = 0;
 
+    transient Node<E> first;
+
+    transient Node<E> last;
+
+    transient Node<E> lastTA;
+
     public String getParent(String value) {
-        //have to be implemented
-        return null;
+        String result = null;
+        Node<E> temp = first;
+        for (int i = 0; i < size(); i++) {
+            if (temp.item.equals(value))
+                result = String.valueOf(temp.parent.item);
+            else
+                temp = temp.next;
+        }
+        return result;
+    }
+
+    void linkLast(E e) {
+        final Node<E> l = last;
+        final Node<E> newNode = new Node<>(l, e, null);
+        last = newNode;
+        if (l == null) {
+            first = newNode;
+            lastTA = newNode;
+        }
+        else if (l == first)
+            l.next = newNode;
+        else {
+            l.next = newNode;
+            if (lastTA.child2 != null)
+                lastTA = lastTA.next;
+
+            newNode.parent = lastTA;
+
+            if (lastTA.child1 == null)
+                lastTA.child1 = newNode;
+            else
+                lastTA.child2 = newNode;
+        }
+
+        size++;
+        modCount++;
+    }
+
+    void linkBefore(E e, Node<E> succ) {
+        // assert succ != null;
+        final Node<E> pred = succ.prev;
+        final Node<E> newNode = new Node<>(pred, e, succ);
+        succ.prev = newNode;
+        if (pred == null)
+            first = newNode;
+        else
+            pred.next = newNode;
+        size++;
+        modCount++;
+    }
+
+    E unlink(Node<E> x) {
+        // assert x != null;
+        final E element = x.item;
+        final Node<E> next = x.next;
+        final Node<E> prev = x.prev;
+
+        if (prev == null) {
+            first = next;
+        } else {
+            prev.next = next;
+            x.prev = null;
+        }
+
+        if (next == null) {
+            last = prev;
+        } else {
+            next.prev = prev;
+            x.next = null;
+        }
+
+        x.item = null;
+        size--;
+        modCount++;
+        return element;
+    }
+
+    public boolean add(E e) {
+        linkLast(e);
+        return true;
+    }
+
+    public boolean remove(Object o) {
+        if (o == null) {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (x.item == null) {
+                    unlink(x.child1);
+                    unlink(x.child2);
+                    unlink(x);
+                    return true;
+                }
+            }
+        } else {
+            for (Node<E> x = first; x != null; x = x.next) {
+                if (o.equals(x.item)) {
+                    unlink(x.child1);
+                    unlink(x.child2);
+                    unlink(x);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+
+    private boolean isPositionIndex(int index) {
+        return index >= 0 && index <= size;
+    }
+
+    private java.lang.String outOfBoundsMsg(int index) {
+        return "Index: "+index+", Size: "+size;
+    }
+
+    private void checkPositionIndex(int index) {
+        if (!isPositionIndex(index))
+            throw new IndexOutOfBoundsException(outOfBoundsMsg(index));
+    }
+
+    Node<E> node(int index) {
+        // assert isElementIndex(index);
+
+        if (index < (size >> 1)) {
+            Node<E> x = first;
+            for (int i = 0; i < index; i++)
+                x = x.next;
+            return x;
+        } else {
+            Node<E> x = last;
+            for (int i = size - 1; i > index; i--)
+                x = x.prev;
+            return x;
+        }
+    }
+
+    public ListIterator<E> listIterator(int index) {
+        checkPositionIndex(index);
+        return new ListItr(index);
+    }
+
+    private class ListItr implements ListIterator<E> {
+        private Node<E> lastReturned = null;
+        private Node<E> next;
+        private int nextIndex;
+        private int expectedModCount = modCount;
+
+        ListItr(int index) {
+            // assert isPositionIndex(index);
+            next = (index == size) ? null : node(index);
+            nextIndex = index;
+        }
+
+        public boolean hasNext() {
+            return nextIndex < size;
+        }
+
+        public E next() {
+            checkForComodification();
+            if (!hasNext())
+                throw new NoSuchElementException();
+
+            lastReturned = next;
+            next = next.next;
+            nextIndex++;
+            return lastReturned.item;
+        }
+
+        public boolean hasPrevious() {
+            return nextIndex > 0;
+        }
+
+        public E previous() {
+            checkForComodification();
+            if (!hasPrevious())
+                throw new NoSuchElementException();
+
+            lastReturned = next = (next == null) ? last : next.prev;
+            nextIndex--;
+            return lastReturned.item;
+        }
+
+        public int nextIndex() {
+            return nextIndex;
+        }
+
+        public int previousIndex() {
+            return nextIndex - 1;
+        }
+
+        public void remove() {
+            checkForComodification();
+            if (lastReturned == null)
+                throw new IllegalStateException();
+
+            Node<E> lastNext = lastReturned.next;
+            unlink(lastReturned);
+            if (next == lastReturned)
+                next = lastNext;
+            else
+                nextIndex--;
+            lastReturned = null;
+            expectedModCount++;
+        }
+
+        public void set(E e) {
+            if (lastReturned == null)
+                throw new IllegalStateException();
+            checkForComodification();
+            lastReturned.item = e;
+        }
+
+        public void add(E e) {
+            checkForComodification();
+            lastReturned = null;
+            if (next == null)
+                linkLast(e);
+            else
+                linkBefore(e, next);
+            nextIndex++;
+            expectedModCount++;
+        }
+
+        final void checkForComodification() {
+            if (modCount != expectedModCount)
+                throw new ConcurrentModificationException();
+        }
+    }
+
+    private static class Node<E> {
+        E item;
+        Node<E> parent;
+        Node<E> prev;
+        Node<E> child1;
+        Node<E> child2;
+        Node<E> next;
+
+
+        private Node(Node<E> prev, E element, Node<E> next) {
+            this.item = element;
+            this.prev = prev;
+            this.next = next;
+        }
+
+
     }
 
 
