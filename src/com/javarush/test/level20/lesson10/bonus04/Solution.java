@@ -60,21 +60,9 @@ public class Solution
         for (int i = 1; i < 16; i++) {
             list.add(java.lang.String.valueOf(i));
         }
-//        System.out.println("Expected 3, actual is " + ((Solution) list).getParent("8"));
+
         list.remove("2");
         list.remove("9");
-        for (int i = 16; i < 21; i++) {
-            list.add(java.lang.String.valueOf(i));
-        }
-//        list.remove("18");
-//        list.remove("20");
-//        for (int i = 21; i < 23; i++) {
-//            list.add(java.lang.String.valueOf(i));
-//        }
-//        System.out.println("before Serializing");
-//        for (String x : list){
-//            System.out.println("Parent of " + x + ": " + ((Solution) list).getParent(x));
-//        }
 
         FileOutputStream fileOutputStream = new FileOutputStream("e:\\Books\\numbers.txt");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
@@ -87,26 +75,52 @@ public class Solution
         List<String> list2 = (Solution)objectInputStream.readObject();
         objectInputStream.close();
 
-        list.remove("18");
-        list.remove("20");
-        for (int i = 21; i < 23; i++) {
-            list.add(java.lang.String.valueOf(i));
-        }
-        for (String x : list){
-            System.out.println("Parent of " + x + ": " + ((Solution) list).getParent(x));
-        }
 
-
-        System.out.println("after Serializing");
+        for (int i = 16; i < 21; i++) {
+            list2.add(java.lang.String.valueOf(i));
+        }
 
         list2.remove("18");
         list2.remove("20");
+
+
+
         for (int i = 21; i < 23; i++) {
             list2.add(java.lang.String.valueOf(i));
         }
+
+
         for (String x : list2){
-            System.out.println("Parent of " + x + ": " + ((Solution) list).getParent(x));
+            System.out.println("Parent of " + x + ": " + ((Solution) list2).getParent(x));
         }
+
+//        System.out.println("before Serializing");
+//        for (String x : list){
+//            System.out.println("Parent of " + x + ": " + ((Solution) list).getParent(x));
+//        }
+
+
+//
+//        list.remove("18");
+//        list.remove("20");
+//        for (int i = 21; i < 23; i++) {
+//            list.add(java.lang.String.valueOf(i));
+//        }
+//        for (String x : list){
+//            System.out.println("Parent of " + x + ": " + ((Solution) list).getParent(x));
+//        }
+//
+//
+//        System.out.println("after Serializing");
+//
+//        list2.remove("18");
+//        list2.remove("20");
+//        for (int i = 21; i < 23; i++) {
+//            list2.add(java.lang.String.valueOf(i));
+//        }
+//        for (String x : list2){
+//            System.out.println("Parent of " + x + ": " + ((Solution) list).getParent(x));
+//        }
 
 //        ListIterator<java.lang.String> iterator = list.listIterator();
 //        while (iterator.hasNext()){
@@ -119,14 +133,14 @@ public class Solution
 
     }
 
-    transient int size = 0;
+    int size = 0;
 
-    transient Node<String> first;
+    Node<String> first;
 
-    transient Node<String> last;
+    Node<String> last;
 
     //new variable, it's needed for adding new elements
-    transient Node<String> lastTA;
+    Node<String> lastTA;
 
     public java.lang.String getParent(java.lang.String value) {
         java.lang.String result = null;
@@ -245,21 +259,7 @@ public class Solution
         return false;
     }
 
-    Node<String> node(int index) {
-        // assert isElementIndex(index);
 
-        if (index < (size >> 1)) {
-            Node<String> x = first;
-            for (int i = 0; i < index; i++)
-                x = x.next;
-            return x;
-        } else {
-            Node<String> x = last;
-            for (int i = size - 1; i > index; i--)
-                x = x.prev;
-            return x;
-        }
-    }
 
     @Override
     public Iterator<String> iterator() {
@@ -354,7 +354,7 @@ public class Solution
         }
     }
 
-    private static class Node<E> {
+    private static class Node<E> implements Serializable {
         E item;
         Node<E> parent;
         Node<E> prev;
@@ -385,33 +385,50 @@ public class Solution
         return size;
     }
 
-    private void writeObject(java.io.ObjectOutputStream s)
-            throws java.io.IOException {
-        // Write out any hidden serialization magic
-        s.defaultWriteObject();
+    @Override
+    public String set(int index, String element) {
+        throw new UnsupportedOperationException();
+    }
 
-        // Write out size
-        s.writeInt(size);
+    @Override
+    public void add(int index, String element) {
+        throw new UnsupportedOperationException();
+    }
 
-        // Write out all elements in the proper order.
-        for (Node<String> x = first; x != null; x = x.next)
-            s.writeObject(x.item);
+    @Override
+    public String remove(int index) {
+        throw new UnsupportedOperationException();
+    }
 
+    @Override
+    public int indexOf(Object o) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int lastIndexOf(Object o) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean addAll(int index, Collection<? extends String> c) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public ListIterator<String> listIterator(int index) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public List<String> subList(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    protected void removeRange(int fromIndex, int toIndex) {
+        throw new UnsupportedOperationException();
     }
 
 
-    @SuppressWarnings("unchecked")
-    private void readObject(java.io.ObjectInputStream s)
-            throws java.io.IOException, ClassNotFoundException {
-        // Read in any hidden serialization magic
-        s.defaultReadObject();
-
-        // Read in size
-        int size = s.readInt();
-
-        // Read in all elements in the proper order.
-        for (int i = 0; i < size; i++)
-            linkLast((String)s.readObject());
-
-    }
 }
